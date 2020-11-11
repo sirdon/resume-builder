@@ -13,3 +13,9 @@ export const SET_MAIL ="SET_EMAIL";
 export const SET_PASSWORD ="SET_PASSWORD";
 export const UPDATE_MAIL ="UPDATE_MAIL";
 
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_IN_FAILED="SIGN_IN_FAILED";
+export const REGISTER="REGISTER";
+export const REGISTER_FAILED="REGISTER_FAILED";
+export const SIGN_OUT="SIGN_OUT";
+export const SIGN_OUT_FAILED="SIGN_OUT_FAILED";

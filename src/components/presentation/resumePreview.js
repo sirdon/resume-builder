@@ -1,16 +1,18 @@
 import React from 'react';
 import { fieldCd } from './../../constants/typeCodes'
-
+import * as documentActions from '../../actions/documentActions';
+import {connect } from 'react-redux';
+import {  bindActionCreators} from 'redux';
 
 class ResumePreview extends React.PureComponent {
-    // constructor(props,context) {
-    //     super(props,context)
-    //     this.state = {
-    //       educationSection: this.props.educationSection,
-    //       contactSection:this.props.contactSection,
-    //       document:this.props.document
-    //     }
-    //   } 
+    constructor(props,context) {
+        super(props,context)
+        this.state = {
+          educationSection: this.props.educationSection,
+          contactSection:this.props.contactSection,
+          document:this.props.document
+        }
+      } 
 
     contactResume=(key, valToAppend)=>{
         if(this.props.contactSection){
@@ -29,9 +31,8 @@ class ResumePreview extends React.PureComponent {
 
     render() {
         const { contactResume, rvEducation } = this;
-        console.log("contact props ",this.props.contactSection)
         return (
-            <div className={"resume-preview skin1"}>
+            <div className={"resume-preview "+this.props.document.skinCd } id="myresume">
                 <div className={'name-section'}>
                     <p className={'center contact-name text-upper'}> {`${contactResume(fieldCd.FirstName)}  ${contactResume(fieldCd.LastName)}`} </p>
                     <p className={'center address'}>{contactResume(fieldCd.City) + contactResume(fieldCd.State)
@@ -57,4 +58,12 @@ class ResumePreview extends React.PureComponent {
     }
 }
 
-export default ResumePreview;
+const mapStateToProps=(state)=>{
+    return {
+        contactSection:state.contact,
+        educationSection:state.education,
+        document:state.document
+    }
+  }
+
+  export default connect(mapStateToProps,null)(ResumePreview)

@@ -39,9 +39,7 @@ class Education extends React.Component {
     }else{
       await this.props.educationActions.add(this.state.document.id, this.state.educationSection);
     }
-    console.log("after async")
      this.props.history.push('/preview')
-     console.log("after preview")
   }
 
   getFieldData=(key)=>{

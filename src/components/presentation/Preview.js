@@ -4,6 +4,8 @@ import {skinCodes} from '../../constants/typeCodes';
 import * as documentActions from '../../actions/documentActions';
 import {connect } from 'react-redux';
 import {  bindActionCreators} from 'redux';
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 export class Preview extends Component {
   constructor(props,context) {
     super(props,context)
@@ -13,25 +15,39 @@ export class Preview extends Component {
       document:this.props.document
     }
   }
+  componentWillReceiveProps(nextProps){
+    this.setState({document:nextProps.document})
+  }
   onChange = async (skinCd) => {
-    this.setState({...this.state, document: {...this.state.document, skinCd:skinCd   }})
-    //   this.setState({skinCd:skinCd})
     await this.props.documentActions.updateSkinCd(this.state.document.id,skinCd);
+    // this.setState({...this.state, document: {...this.state.document, skinCd:skinCd   }})
+    //   this.setState({skinCd:skinCd})
+  
     
-   
     //   this.props.documentActions.changeFontFamily();          
   }
-
+  download=()=>{
+    const resumeElem = document.getElementsByClassName('resume-preview');
+    html2canvas(resumeElem[0]).then((canvas)=>{
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'JPEG',0,0);
+      pdf.save('resume.pdf');
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
   render() {
-    const { educationSection, contactSection } = this.state
+    const { educationSection, contactSection, document } = this.state
     return (
       <div className="container med finalize-page" >
         <div className="funnel-section ">
             <div className="finalize-preview-card ">
-              <ResumePreview contactSection={contactSection} educationSection={educationSection}></ResumePreview>   
+              <ResumePreview contactSection={contactSection} educationSection={educationSection} skinCd={document.skinCd}></ResumePreview>   
             </div>
             <div className="finalize-settings">
           <div className="section">
+          <button className=" center" onClick={this.download}>Download</button>
             <h1 className=" center">
               Select a resume template to get started</h1>
             <p className=" center">
