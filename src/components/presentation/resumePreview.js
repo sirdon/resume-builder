@@ -10,7 +10,7 @@ class ResumePreview extends React.PureComponent {
     //       contactSection:this.props.contactSection,
     //       document:this.props.document
     //     }
-    //   }
+    //   } 
 
     contactResume=(key, valToAppend)=>{
         if(this.props.contactSection){

@@ -1,7 +1,7 @@
 import * as actionsCodes from '../actions/actionTypes'
 import update from 'immutability-helper';
 import initialState from '../initailStates/initialState.json'
-export default function contactReducer(state = initialState.educationSection, action) {
+export default function educationReducer(state = initialState.educationSection, action) {
     switch (action.type) {
        case actionsCodes.ADD_EDUCATION:
             return update(state,  { $set: action.educationSection  } );
