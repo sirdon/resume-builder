@@ -2,17 +2,19 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../static/images/logo.png";
 import {connect} from 'react-redux';
-function LoggedIn(auth) {
-  let uid =auth.auth.uid;
+import * as authActions from '../../actions/authActions';
+import {bindActionCreators} from 'redux';
+function LoggedIn(props) {
+  let email =props.auth.email;
+  console.log(props.auth);
   return (
-
         <ul>
             <li className="signin ">
               <NavLink className="  " to="/register">
-               Logged in as {uid}
+               Logged in as {email}
               </NavLink>
             </li>
-            <li className="signin"> 
+            <li className="signin" onClick={props.hello}> 
               <NavLink className="text-blue btnv-3" to="/login">
              Signout
               </NavLink>         
@@ -42,9 +44,6 @@ function LoggesOut(props) {
 const header = (props) => {
 
   const { auth } = props;
-  // console.log(auth);
-
-
   return (  
   <header className="header">
   <nav className="nav">
@@ -53,7 +52,7 @@ const header = (props) => {
       </a> 
         <div className="header-links full-height">
 
-        {auth && auth.uid ?<LoggedIn auth={auth}></LoggedIn>:<LoggesOut></LoggesOut>}
+        {auth && auth.uid ?<LoggedIn auth={auth} hello={props.authActions.signout}></LoggedIn>:<LoggesOut></LoggesOut>}
           
           <ul id="nav-mid">
             <li>
@@ -80,4 +79,9 @@ const mapStateToProps=(state)=>{
      auth: state.firebase.auth
   }
 }
-export default connect(mapStateToProps,null)(header);
+const mapDispatchToProps=(dispatch)=>{
+  return{
+     authActions:bindActionCreators(authActions, dispatch)
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(header);

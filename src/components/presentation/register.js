@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import { bindActionCreators } from 'redux';
 import React, { Component } from 'react'
 import { UPDATE_CONTACT } from "../../actions/actionTypes";
-import * as register from '../../actions/registerActions';
+import * as authActions from '../../actions/authActions';
 
 
 export class Register extends Component {
@@ -19,15 +19,14 @@ export class Register extends Component {
             [e.target.name]: e.target.value
         })
     }
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         if (this.state.password == this.state.confirmPassword) {
             const obj = { email: this.state.email, password: this.state.password }
-            this.props.register.addEmail(this.state.email)
-            this.props.register.addPassword(this.state.password)
             this.setState({
                 errorMessage: "center hide"
             })
-            this.props.history.push("/getting-started")
+            await this.props.authActions.register(obj);
+            await this.props.history.push("/getting-started")
         }
         else {
             console.log("error")
@@ -93,7 +92,7 @@ export class Register extends Component {
 // }
 const mapDispatchToProps = (dispatch) => {
     return {
-        register: bindActionCreators(register, dispatch)
+        authActions: bindActionCreators(authActions, dispatch)
         // setSkinCd:(skinCd)=>(dispatch(documentAction.setSkin(skinCd)))
     }
 }

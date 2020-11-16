@@ -13,7 +13,7 @@ import { reduxFirestore, getFirestore } from 'redux-firestore';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import config from './config';
 const reduxStore = createStore(rootReducer, 
   compose(

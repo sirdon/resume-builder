@@ -1,7 +1,6 @@
 import * as actionTypes from './actionTypes';
 
 export const signIn=(userData)=>{
-
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
         firebase.auth().signInWithEmailAndPassword(
@@ -16,10 +15,9 @@ export const signIn=(userData)=>{
 }
 
 export const signout=()=>{
-    
     return (dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
-        firebase.auth().signout().then(()=>{
+        firebase.auth().signOut().then(()=>{
             dispatch({type: actionTypes.SIGN_OUT})
         }).catch((err)=>{
             dispatch({type: actionTypes.SIGN_OUT_FAILED,err})
